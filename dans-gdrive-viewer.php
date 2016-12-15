@@ -4,16 +4,30 @@
 * Plugin Name: Dans Google Drive Viewer
 * Plugin URI: https://www.wptechguides.com
 * Description: A custom Google Drive Viewer w/ Folder Transversal and File Export
-* Version: 1.0
+* Version: 1.1
 * Author: Dan D
 * Author URI: https://www.convexcode.com
+* Text Domain: dgdrive
+* Domain Path: /languages/
 **/
+
+//loads my plugin translation files
+function dans_gdrive_load_translation_files() {
+	load_plugin_textdomain('dgdrive', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+
+//add action to load plugin translation files
+add_action('plugins_loaded', 'dans_gdrive_load_translation_files');
 
 
 //enqueues all js files needed
 function gdrive_enqueue_script() {
 
-	wp_enqueue_script( 'dans-gdrive-js', plugin_dir_url( __FILE__ ) . 'js/dandrive.js', false ); 
+	wp_enqueue_script( 'dans-gdrive-js', plugin_dir_url( __FILE__ ) . 'js/dandrive.js', array('jquery'), false );
+	wp_localize_script( 'dans-gdrive-js', 'objectL10n', array(
+	'DL' => esc_html__( 'DL', 'dgdrive' ),
+	'Export' => esc_html__( 'Export', 'dgdrive' ),
+) );
 
 }
 add_action( 'wp_enqueue_scripts', 'gdrive_enqueue_script' );
@@ -24,7 +38,9 @@ add_action('admin_menu', 'dans_gdrive_plugin_menu');
 
 //creates a menu page with the following settings
 function dans_gdrive_plugin_menu() {
-	add_menu_page('Dans Google Drive Settings', 'Dans gDrive', 'administrator', 'dans-gdrive-settings', 'dans_gdrive_display_settings', 'dashicons-admin-generic');
+
+	add_submenu_page('tools.php', 'Dan\'s gDrive', 'Dan\'s gDrive', 'manage_options', 'dans-gdrive-settings', 'dans_gdrive_display_settings');
+
 }
 
 //on-load, sets up the following settings for the plugin
@@ -67,39 +83,48 @@ echo "<script>function addRow(nextnum,nextdisp){
 ";
 
 	//paragraph giving plugin explanation, api setup instructions, and shortcode information
-    echo "	
-	<div><h1>Dan's Google Drive Viewer Settings</h1>
+	echo '
+	<div><h1>' . esc_html__( 'Dan\'s Google Drive Viewer Settings', 'dgdrive' ) . '</h1>
 
-<p>Welcome! This is a basic Google Drive Viewer integration plugin, with the following features. <ul style=\"list-style-type:square\">
-<li>Displays public drive document listings in a mobile friendly format</li>
-<li>Offers both View and Download Options, where appropriate</li>
-<li>All options are configured via shortcode</li>
-<li>Offers Export Option for Google Docs / Sheets / Presentations</li>
-<li>Allows Drill Down / Up without Leaving the Page</li> 
-</ul>
-<br>
-<b>Shortcodes:</b>
-<ul style=\"list-style-type:square\"><li>Default Display [dandrive] (defaults to 1st drive)</li></ul>
-Optional Attributes Ex:[dandrive drive=1 divid=mydrive height=400 width=300 rbutton=no]
-<ul style=\"list-style-type:square\">
-<li>drive= (number of the drive you want, defaults to 1 if not entered)</li>
-<li>divid= (id of the div your calendar is stored in, for custom theming. Defaults to random string to allow multiple per page)</li>
-<li>height= (maximum height in pixels, defaults to auto. If this is set, a scroll bar will appear if your div overflows. Enter a number only).</li>
-<li>width = (maximum width in pixels, defaults to 400. Enter a number only)</li>
-<li>rbutton = (no, to not display return to initial folder button, if you have files only in the folder directly linked with no subfolders. Otherwise, leave this attribute off).</li>
-</ul>
-<br>
-To create API key, visit <a href=\"https://console.developers.google.com/\" target=\"_blank\">Google Developers Console</a> Then, follow bellow;
+	<p>' . esc_html__( 'Welcome! This is a basic Google Drive Viewer integration plugin, with the following features.', 'dgdrive' ) . '
+	<ul style=\"list-style-type:square\">
+		<li>' . esc_html__( 'Displays public drive document listings in a mobile friendly format', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'Offers both View and Download Options, where appropriate', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'All options are configured via shortcode', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'Offers Export Option for Google Docs / Sheets / Presentations', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'Allows Drill Down / Up without Leaving the Page', 'dgdrive' ) . '</li>
+	</ul>
+	<br>
+	<strong>' . esc_html__( 'Shortcodes:', 'dgdrive' ) . '</strong>
+	<ul style=\"list-style-type:square\">
+		<li>' . esc_html__( 'Default Display [dandrive] (defaults to 1st drive)', 'dgdrive' ) . '</li>
+	</ul>
 
-<ul style=\"list-style-type:square\"><li>Create new project (or use project you created before).</li><li>Check \"APIs & auth\" -> \"Credentials\" on side menu.</li><li>Hit \"Create new Key\" button on \"Public API access\" section.</li><li>Choose \"Browser key\" and keep blank on referer limitation.</li></ul>
-</p>";
+	' . esc_html__( 'Optional Attributes Ex:[dandrive drive=1 divid=mydrive height=400 width=300 rbutton=no]', 'dgdrive' ) . '
+	<ul style=\"list-style-type:square\">
+		<li>' . esc_html__( 'drive= (number of the drive you want, defaults to 1 if not entered)', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'divid= (id of the div your calendar is stored in, for custom theming. Defaults to random string to allow multiple per page)', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'height= (maximum height in pixels, defaults to auto. If this is set, a scroll bar will appear if your div overflows. Enter a number only).', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'width = (maximum width in pixels, defaults to 400. Enter a number only)', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'rbutton = (no, to not display return to initial folder button, if you have files only in the folder directly linked with no subfolders. Otherwise, leave this attribute off).', 'dgdrive' ) . '</li>
+	</ul>
+	<br>
+	' . esc_html__( 'To create API key, visit <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a> Then, follow bellow;', 'dgdrive' ) . '
+
+	<ul style=\"list-style-type:square\">
+		<li>' . esc_html__( 'Create new project (or use project you created before).', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'Check "APIs & auth" -> "Credentials" on side menu.', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'Hit "Create new Key" button on "Public API access" section.', 'dgdrive' ) . '</li>
+		<li>' . esc_html__( 'Choose "Browser key" and keep blank on referer limitation.', 'dgdrive' ) . '</li>
+	</ul>
+	</p>';
 
 //Settings to be saved
 echo "
 <table id=\"gdrive-settings\" class=\"form-table\" aria-live=\"assertive\">
-	<tr><td colspan=\"2\"><h2>API KEY - Google Drive Viewer (All REQUIRED)</h2></td></tr> 
+	<tr><td colspan=\"2\"><h2>" . esc_html__( 'API KEY - Google Drive Viewer (All REQUIRED)', 'dgdrive' ) . "</h2></td></tr>
        <tr valign=\"top\">
-        <th scope=\"row\">Google Drive API Key</th>
+        <th scope=\"row\">" . esc_html__( 'Google Drive API Key', 'dgdrive' ) . "</th>
         <td><input type=\"text\" name=\"gdrive_api_key\" size=\"80\" value=\"".esc_attr( get_option('gdrive_api_key') )."\" /></td></tr>
 
 <tr><td colspan=\"2\"><h2>Google Drive Folder IDs</h2></td></tr>";
@@ -108,14 +133,14 @@ $gdrive_driveids = get_option('gdrive_driveids');
 $num_drives = 0;
 $num_drives = count($gdrive_driveids);
 
-if ($num_drives > 1) $showrows=$num_drives; 
+if ($num_drives > 1) $showrows=$num_drives;
 else $showrows = 1;
 
 for ($i=0;$i < $showrows; $i++) {
 	$nextid = $i+1;
 	$nextdisp = $i+2;
 	$drivenum = $i+1;
-	echo " 
+	echo "
        <tr valign=\"top\">
         <th scope=\"row\">Google Drive ID ($drivenum)</th>
         <td><input type=\"text\" name=\"gdrive_driveids[$i]\" size=\"80\" value=\"$gdrive_driveids[$i]\"/>
@@ -123,15 +148,15 @@ for ($i=0;$i < $showrows; $i++) {
 
 if (($showrows -1) == $i) {
 
-echo "<button type=\"button\" id=\"addrowbutton\" onClick=\"addRow($nextid,$nextdisp)\">Add Row</button>";
+echo '<button type=\"button\" id=\"addrowbutton\" onClick=\"addRow($nextid,$nextdisp)\">' . esc_html__( 'Add Row', 'dgdrive' ) . '</button>';
 
 }
-echo "</td></tr>";
+echo '</td></tr>';
 
 }
-       
+
    echo" </table>";
-    
+
     submit_button();
 
 	echo "</form>";
@@ -150,25 +175,25 @@ function dandrive_display($atts) {
 
 	$gdrive_api_key = esc_attr( get_option('gdrive_api_key') );
 
-	if ($gdrive_api_key == '') { 
-		
+	if ($gdrive_api_key == '') {
+
 		$error = 'You must first enter a valid Google Drive API key.';
 		return $error;
-	} 
+	}
 
 
 	//generates a random div id to allow multiple on one page, if one isn't specified in shortcode
 	$randdiv = 'a'.substr(md5(microtime()),rand(0,26),10);
 
-	//Handles attribures. If none are specified, defaults to no scroll, 1st drive	
+	//Handles attribures. If none are specified, defaults to no scroll, 1st drive
 	$atts = shortcode_atts(
         array(
-            'drive' => 1,
-		  'divid' => $randdiv,
-		  'height' => 'auto',
-		  'width' => '400',
-		  'rbutton' => 'yes',
-        ), $atts, 'dandrive' );
+					'drive' => 1,
+					'divid' => $randdiv,
+					'height' => 'auto',
+					'width' => '400',
+					'rbutton' => 'yes',
+				), $atts, 'dandrive' );
 
 	$drive = $atts['drive'];
 	$divid = $atts['divid'];
@@ -195,9 +220,9 @@ function dandrive_display($atts) {
 	$gdrive_num = $drive-1;
 
 	$drive = $gdrive_driveids[$gdrive_num];
-	
-	if ($drive == '' || $drive == 'broken') { 
-		
+
+	if ($drive == '' || $drive == 'broken') {
+
 		$error = 'You must first enter a valid Google Drive id.';
 		return $error;
 	}
@@ -210,8 +235,8 @@ function dandrive_display($atts) {
 	background:white;
 
 }
-#$divid { 
-	
+#$divid {
+
 	background:black;
 	display:inline-block;
 	max-height:$maxheight;
@@ -227,7 +252,7 @@ if ($maxheight != 'auto') {
 
 ";
 
-}	
+}
 
 $disp .= "
 }
@@ -249,11 +274,11 @@ var promise = jQuery.getJSON( url, function( data, status){
 });
 promise.done(function( data ){
 
-var inner='<table id=\"glist-$divid\" cellpadding=\"5\" aria-live=\"assertive\"><tr><th>View</th>';
+var inner='<table id=\"glist-$divid\" cellpadding=\"5\" aria-live=\"assertive\"><tr><th>" . esc_html__( 'View', 'dgdrive' ) . "</th>';
 
-/*<th>Type</th><th>View</th>*/
+/*<th>" . esc_html__( 'Type', 'dgdrive' ) . "</th><th>" . esc_html__( 'View', 'dgdrive' ) . "</th>*/
 
-inner += '<th>Download</th></tr>';
+inner += '<th>" . esc_html__( 'Download', 'dgdrive' ) . "</th></tr>';
 
 for (i = 0; i < data.files.length; i++) {
 
@@ -269,7 +294,7 @@ inner += '</table>';
 if ($rbutton == 'yes') {
 
 	$disp .= "
-document.getElementById('return-to-root-$divid').innerHTML = '<table><tr><td><button onClick=loadSub(\''+folderId+'\',\''+folderId+'\',\'$gdrive_api_key\')>Return To Initial Folder</button></td></tr></table>';";
+document.getElementById('return-to-root-$divid').innerHTML = '<table><tr><td><button onClick=loadSub(\''+folderId+'\',\''+folderId+'\',\'$gdrive_api_key\')>" . esc_html__( 'Return To Initial Folder', 'dgdrive' ) . "</button></td></tr></table>';";
 
 }
 
@@ -295,9 +320,9 @@ function loadSub(folderId,hId) {
 
 		var inner='<table id=\"glist-$divid\" cellpadding=\"5\"  aria-live=\"assertive\" style=\"max-width:100%\"><tr><th>View</th>';
 
-/*<th>Type</th><th>View</th>*/
+/*<th>Type</th><th>" . esc_html__( 'View', 'dgdrive' ) . "</th>*/
 
-		inner += '<th>Download</th></tr>';
+		inner += '<th>" . esc_html__( 'Download', 'dgdrive' ) . "</th></tr>';
 
 		for (i = 0; i < data.files.length; i++) {
 
@@ -320,7 +345,7 @@ if ($rbutton == 'yes') {
 
 	$disp .= "<div id=\"return-to-root-$divid\"  aria-live=\"assertive\"></div>";
 }
-$disp .= "<div id='$divid'  aria-live=\"assertive\"><h2 style=\"color:white;padding:20px;max-width:100%\">Loading Drive Folder...</h2></div>
+$disp .= "<div id='$divid'  aria-live=\"assertive\"><h2 style=\"color:white;padding:20px;max-width:100%\">" . esc_html__( 'Loading Drive Folder...', 'dgdrive' ) . "</h2></div>
 
 </body>";
 

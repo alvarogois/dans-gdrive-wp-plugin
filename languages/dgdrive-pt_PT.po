@@ -1,0 +1,190 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Dans Google Drive Viewer\n"
+"POT-Creation-Date: 2016-12-15 13:01+0000\n"
+"PO-Revision-Date: 2016-12-15 14:38+0000\n"
+"Last-Translator: Alvaro Gois dos Santos <alvarogois@ovni.org>\n"
+"Language-Team: Alvaro Gois dos Santos <alvarogois@ovni.org>\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: dans-gdrive-viewer.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: dans-gdrive-viewer.php:28
+msgid "DL"
+msgstr "Descarregar"
+
+#: dans-gdrive-viewer.php:29
+msgid "Export"
+msgstr "Exportar"
+
+#: dans-gdrive-viewer.php:87
+msgid "Dan's Google Drive Viewer Settings"
+msgstr "Configuração do Dan's Google Drive Viewer"
+
+#: dans-gdrive-viewer.php:89
+msgid ""
+"Welcome! This is a basic Google Drive Viewer integration plugin, with the "
+"following features."
+msgstr ""
+"Olá! Este plugin faz uma integração básica do Google Drive Viewer, com as "
+"seguintes características:"
+
+#: dans-gdrive-viewer.php:91
+msgid "Displays public drive document listings in a mobile friendly format"
+msgstr ""
+"Mostra uma lista de documentos de uma drive pública num formato amigável "
+"para dispositivos móveis"
+
+#: dans-gdrive-viewer.php:92
+msgid "Offers both View and Download Options, where appropriate"
+msgstr "Quando possível, apresenta duas opções, ver e descarregar"
+
+#: dans-gdrive-viewer.php:93
+msgid "All options are configured via shortcode"
+msgstr "Todas as opções são configuradas através de shortcode"
+
+#: dans-gdrive-viewer.php:94
+msgid "Offers Export Option for Google Docs / Sheets / Presentations"
+msgstr ""
+"Apresenta uma opção de exportação para Google Docs/Folhas/Apresentações"
+
+#: dans-gdrive-viewer.php:95
+msgid "Allows Drill Down / Up without Leaving the Page"
+msgstr "Permite retroceder/avançar nas pastas sem sair da página"
+
+#: dans-gdrive-viewer.php:98
+msgid "Shortcodes:"
+msgstr ""
+
+#: dans-gdrive-viewer.php:100
+msgid "Default Display [dandrive] (defaults to 1st drive)"
+msgstr ""
+
+#: dans-gdrive-viewer.php:103
+msgid ""
+"Optional Attributes Ex:[dandrive drive=1 divid=mydrive height=400 width=300 "
+"rbutton=no]"
+msgstr ""
+
+#: dans-gdrive-viewer.php:105
+msgid "drive= (number of the drive you want, defaults to 1 if not entered)"
+msgstr ""
+
+#: dans-gdrive-viewer.php:106
+msgid ""
+"divid= (id of the div your calendar is stored in, for custom theming. "
+"Defaults to random string to allow multiple per page)"
+msgstr ""
+
+#: dans-gdrive-viewer.php:107
+msgid ""
+"height= (maximum height in pixels, defaults to auto. If this is set, a "
+"scroll bar will appear if your div overflows. Enter a number only)."
+msgstr ""
+
+#: dans-gdrive-viewer.php:108
+msgid "width = (maximum width in pixels, defaults to 400. Enter a number only)"
+msgstr ""
+
+#: dans-gdrive-viewer.php:109
+msgid ""
+"rbutton = (no, to not display return to initial folder button, if you have "
+"files only in the folder directly linked with no subfolders. Otherwise, "
+"leave this attribute off)."
+msgstr ""
+
+#: dans-gdrive-viewer.php:112
+msgid ""
+"To create API key, visit <a href=\"https://console.developers.google.com/\" "
+"target=\"_blank\">Google Developers Console</a> Then, follow bellow;"
+msgstr ""
+
+#: dans-gdrive-viewer.php:115
+msgid "Create new project (or use project you created before)."
+msgstr ""
+
+#: dans-gdrive-viewer.php:116
+msgid "Check \"APIs & auth\" -> \"Credentials\" on side menu."
+msgstr ""
+
+#: dans-gdrive-viewer.php:117
+msgid "Hit \"Create new Key\" button on \"Public API access\" section."
+msgstr ""
+
+#: dans-gdrive-viewer.php:118
+msgid "Choose \"Browser key\" and keep blank on referer limitation."
+msgstr ""
+
+#: dans-gdrive-viewer.php:125
+msgid "API KEY - Google Drive Viewer (All REQUIRED)"
+msgstr ""
+
+#: dans-gdrive-viewer.php:127
+msgid "Google Drive API Key"
+msgstr ""
+
+#: dans-gdrive-viewer.php:151
+msgid "Add Row"
+msgstr "Adicionar entrada"
+
+#: dans-gdrive-viewer.php:180
+msgid "You must first enter a valid Google Drive API key."
+msgstr ""
+
+#: dans-gdrive-viewer.php:226
+msgid "You must first enter a valid Google Drive id."
+msgstr ""
+
+#: dans-gdrive-viewer.php:277 dans-gdrive-viewer.php:279
+#: dans-gdrive-viewer.php:323
+msgid "View"
+msgstr "Ver"
+
+#: dans-gdrive-viewer.php:279
+msgid "Type"
+msgstr "Tipo"
+
+#: dans-gdrive-viewer.php:281 dans-gdrive-viewer.php:325
+msgid "Download"
+msgstr "Descarregar"
+
+#: dans-gdrive-viewer.php:297
+msgid "Return To Initial Folder"
+msgstr "Retornar à pasta inicial"
+
+#: dans-gdrive-viewer.php:348
+msgid "Loading Drive Folder..."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Dans Google Drive Viewer"
+msgstr "Dans Google Drive Viewer"
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.wptechguides.com"
+msgstr "https://www.wptechguides.com"
+
+#. Description of the plugin/theme
+msgid "A custom Google Drive Viewer w/ Folder Transversal and File Export"
+msgstr ""
+"Um Google Drive Viewer personalizado, com navegação de pastas e exportação "
+"de documentos"
+
+#. Author of the plugin/theme
+msgid "Dan D"
+msgstr "Dan D"
+
+#. Author URI of the plugin/theme
+msgid "https://www.convexcode.com"
+msgstr "https://www.convexcode.com"
