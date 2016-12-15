@@ -23,15 +23,22 @@ add_action('plugins_loaded', 'dans_gdrive_load_translation_files');
 //enqueues all js files needed
 function gdrive_enqueue_script() {
 
-	wp_enqueue_script( 'dans-gdrive-js', plugin_dir_url( __FILE__ ) . 'js/dandrive.js', array('jquery'), false );
-	wp_localize_script( 'dans-gdrive-js', 'objectL10n', array(
-	'DL' => esc_html__( 'DL', 'dgdrive' ),
-	'Export' => esc_html__( 'Export', 'dgdrive' ),
-) );
+// Register the script
+wp_register_script( 'dans-gdrive-js', plugin_dir_url( __FILE__ ) . 'js/dandrive.js', array('jquery'), false );
+
+// Localize the script with new data
+$translation_array = array(
+	'download' => esc_html__( 'DL', 'dgdrive' ),
+	'export' => esc_html__( 'Export', 'dgdrive' ),
+	'view' => esc_html__( 'View', 'dgdrive' ),
+);
+wp_localize_script( 'dans-gdrive-js', 'script_strings', $translation_array );
+
+// Enqueued script with localized data.
+wp_enqueue_script( 'dans-gdrive-js' );
 
 }
 add_action( 'wp_enqueue_scripts', 'gdrive_enqueue_script' );
-
 
 //creates an entry on the admin menu for dan-gdrive-plugin
 add_action('admin_menu', 'dans_gdrive_plugin_menu');
